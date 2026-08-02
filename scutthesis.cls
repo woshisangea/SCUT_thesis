@@ -24,10 +24,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newif\ifmasterdegree\masterdegreefalse %默认为doctor
 \newif\ifpdfcover\pdfcoverfalse
+\newif\ifblindcover\blindcoverfalse
 \newif\ifchapterx\chapterxfalse
 
 \DeclareOption{master}{\masterdegreetrue}
 \DeclareOption{pdfcover}{\pdfcovertrue} %using pdfcover,TOdo
+\DeclareOption{blindcover}{\blindcovertrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions\relax %revised by Quansheng Guan \ProcessOptions
 \LoadClass[12pt,a4paper,openany]{book}
@@ -431,33 +433,38 @@
 
 %------------------
 \renewcommand{\maketitle}{% called outside
-  \ifpdfcover
-    %%coverpage from pdf file
-    \includepdf[pages={1-5,{},7-8}]{cover_file/thesis_cover.pdf}
+  \ifblindcover
+    %% blind review cover from pdf file
+    \includepdf[pages=-]{cover_file/blind_cover.pdf}
   \else
-    %%buildin coverpage
-    \begin{titlepage}
-    \raggedleft
-    \null
-    \vskip 4em
-
-    \bigskip
-    \centerline{\songti\erhao  {\thesissubject} }
-    \vskip 4em
-
-    \bigskip
-    \centerline{\heiti\yihao  {\@title} }
-    \vskip 2em
-
-    \bigskip
-    \centerline{\songti\erhao   {\@author} }
-    \bigskip
-    \centerline{\songti\erhao   {\@supervisor} }
-
-    \vfill
-    \centerline{\songti\normalsize{\@institute}}
-    \centerline{\songti\normalsize{\@date}}
-    \end{titlepage}
+	  \ifpdfcover
+	    %%coverpage from pdf file
+	    \includepdf[pages={1-5,{},7-8}]{cover_file/thesis_cover.pdf}
+	  \else
+	    %%buildin coverpage
+	    \begin{titlepage}
+	    \raggedleft
+	    \null
+	    \vskip 4em
+	
+	    \bigskip
+	    \centerline{\songti\erhao  {\thesissubject} }
+	    \vskip 4em
+	
+	    \bigskip
+	    \centerline{\heiti\yihao  {\@title} }
+	    \vskip 2em
+	
+	    \bigskip
+	    \centerline{\songti\erhao   {\@author} }
+	    \bigskip
+	    \centerline{\songti\erhao   {\@supervisor} }
+	
+	    \vfill
+	    \centerline{\songti\normalsize{\@institute}}
+	    \centerline{\songti\normalsize{\@date}}
+	    \end{titlepage}
+	  \fi
   \fi
 }
 %%摘要分中英文页，而且有两者排版方式：
